@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModelsTable extends Migration
+class CreateDeviceModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -33,6 +33,6 @@ class CreateModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('models');
+        Schema::dropIfExists('device_models');
     }
 }

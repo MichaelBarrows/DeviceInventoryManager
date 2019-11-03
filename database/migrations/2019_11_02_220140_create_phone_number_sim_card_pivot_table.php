@@ -15,12 +15,12 @@ class CreatePhoneNumberSimCardPivotTable extends Migration
     {
         Schema::create('phone_number_sim_card', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('phone_number');
-            $table->foreign('phone_number')->references('phone_number')->on('phone_numbers');
-            $table->unsignedBigInteger('sim_number');
-            $table->foreign('sim_number')->references('sim_number')->on('sim_cards');
+            $table->unsignedBigInteger('phone_number_id');
+            $table->foreign('phone_number_id')->references('id')->on('phone_numbers');
+            $table->unsignedBigInteger('sim_card_id');
+            $table->foreign('sim_card_id')->references('id')->on('sim_cards');
             $table->date('assignment_start');
-            $table->date('assignment_end');
+            $table->date('assignment_end')->nullable();
             $table->timestamps();
         });
     }

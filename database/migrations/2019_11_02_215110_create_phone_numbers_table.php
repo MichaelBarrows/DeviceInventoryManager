@@ -14,7 +14,8 @@ class CreatePhoneNumbersTable extends Migration
     public function up()
     {
         Schema::create('phone_numbers', function (Blueprint $table) {
-            $table->integer('phone_number', 11)->primry();
+            $table->bigIncrements('id');
+            $table->string('phone_number', 11);
             $table->unsignedBigInteger('network_provider_id');
             $table->foreign('network_provider_id')->references('id')->on('network_providers');
             $table->timestamps();

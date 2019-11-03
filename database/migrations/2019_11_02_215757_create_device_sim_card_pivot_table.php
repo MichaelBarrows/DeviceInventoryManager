@@ -15,12 +15,12 @@ class CreateDeviceSimCardPivotTable extends Migration
     {
         Schema::create('device_sim_card', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('device_serial_number');
-            $table->foreign('device_serial_number')->references('serial_number')->on('devices');
-            $table->unsignedBigInteger('sim_number');
-            $table->foreign('sim_number')->references('sim_number')->on('sim_cards');
+            $table->unsignedBigInteger('device_id');
+            $table->foreign('device_id')->references('id')->on('devices');
+            $table->unsignedBigInteger('sim_card_id');
+            $table->foreign('sim_card_id')->references('id')->on('sim_cards');
             $table->date('assignment_start');
-            $table->date('assignment_end');
+            $table->date('assignment_end')->nullable();
             $table->timestamps();
         });
     }

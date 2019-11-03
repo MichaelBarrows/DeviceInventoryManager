@@ -13,7 +13,7 @@ class CreateModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('models', function (Blueprint $table) {
+        Schema::create('device_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('manufacturer_id');
             $table->foreign('manufacturer_id')->references('id')->on('manufacturers');

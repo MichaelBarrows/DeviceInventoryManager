@@ -14,12 +14,11 @@ class CreateDevicesTable extends Migration
     public function up()
     {
         Schema::create('devices', function (Blueprint $table) {
-            $table->string('serial_number')->primary();
-            $table->bigInteger('imei');
-            $table->unsignedBigInteger('device_type_id');
-            $table->foreign('device_type_id')->references('id')->on('device_types');
-            $table->unsignedBigInteger('model_id');
-            $table->foreign('model_id')->references('id')->on('models');
+            $table->bigIncrements('id');
+            $table->string('serial_number');
+            $table->string('imei');
+            $table->unsignedBigInteger('device_model_id');
+            $table->foreign('device_model_id')->references('id')->on('device_models');
             $table->timestamps();
         });
     }

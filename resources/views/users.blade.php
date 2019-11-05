@@ -38,6 +38,10 @@
                       success: function (data) {
                         // Function to process the data from the API
                         device_success(user.id, data);
+                      },
+                      error: function(){
+                        var data = {'active_devices': ''}
+                        device_success(user.id, data);
                       }
                     })
                   }
@@ -66,7 +70,7 @@
                   device_container.setAttribute('class', 'device_container');
                   device_container.remove();
                   var device_man_model = document.createElement('p');
-                  device_man_model.innerHTML = "Device: "+ item.device_model.manufacturer.name + " " + item.device_model.name;
+                  device_man_model.innerHTML = "Device: "+ item.device_model.manufacturer.name + " " + item.device_model.name + " ("+item.device_model.device_type.type+")";
                   device_container.append(device_man_model);
                   var os = document.createElement('p');
                   os.innerHTML = "OS: "+ item.device_model.operating_system.name;
@@ -102,6 +106,10 @@
                       type: 'GET',
                       success: function (data) {
                         // Function call to handle response
+                        sim_card_success(device.id, data);
+                      },
+                      error: function(){
+                        var data = {'active_sim_cards': ''}
                         sim_card_success(device.id, data);
                       }
                     })
@@ -161,6 +169,9 @@
                         }
                         device_container.append(assignment_end);
                       });
+                    },
+                    error: function(){
+                      return false;
                     }
                   });
                 });

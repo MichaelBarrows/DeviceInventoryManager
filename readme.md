@@ -8,7 +8,7 @@ To install this application, run:
  composer install
  npm install
  ```
- Then either run ``` cp env.example .env ``` or rename the ``` .env.example``` file to ``` .env ```.
+ Then either run ``` cp .env.example .env ``` or rename the ``` .env.example``` file to ``` .env ```.
 
  Add your database details to the ``` .env ``` file so that the database can be created and populated.
 

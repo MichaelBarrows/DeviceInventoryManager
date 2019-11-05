@@ -16,9 +16,9 @@ class CreateDeviceUserPivotTable extends Migration
         Schema::create('device_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('device_id');
-            $table->foreign('device_id')->references('id')->on('devices');
+            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('assignment_start');
             $table->date('assignment_end')->nullable();
             $table->timestamps();

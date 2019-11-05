@@ -15,10 +15,10 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('serial_number');
-            $table->string('imei');
+            $table->string('serial_number')->unique();
+            $table->string('imei')->unique();
             $table->unsignedBigInteger('device_model_id');
-            $table->foreign('device_model_id')->references('id')->on('device_models');
+            $table->foreign('device_model_id')->references('id')->on('device_models')->onDelete('cascade');
             $table->timestamps();
         });
     }

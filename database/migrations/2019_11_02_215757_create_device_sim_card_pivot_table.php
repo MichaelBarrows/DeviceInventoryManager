@@ -16,9 +16,9 @@ class CreateDeviceSimCardPivotTable extends Migration
         Schema::create('device_sim_card', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('device_id');
-            $table->foreign('device_id')->references('id')->on('devices');
+            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
             $table->unsignedBigInteger('sim_card_id');
-            $table->foreign('sim_card_id')->references('id')->on('sim_cards');
+            $table->foreign('sim_card_id')->references('id')->on('sim_cards')->onDelete('cascade');
             $table->date('assignment_start');
             $table->date('assignment_end')->nullable();
             $table->timestamps();

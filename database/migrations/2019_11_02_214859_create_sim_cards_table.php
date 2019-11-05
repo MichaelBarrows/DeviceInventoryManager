@@ -15,7 +15,7 @@ class CreateSimCardsTable extends Migration
     {
         Schema::create('sim_cards', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('sim_number');
+            $table->string('sim_number', 14);
             $table->unsignedBigInteger('network_provider_id');
             $table->foreign('network_provider_id')->references('id')->on('network_providers');
             $table->timestamps();

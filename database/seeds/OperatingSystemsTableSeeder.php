@@ -5,9 +5,7 @@ use Illuminate\Database\Seeder;
 class OperatingSystemsTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * Seed data for the operating systems table
      */
     public function run()
     {

@@ -5,9 +5,7 @@ use Illuminate\Database\Seeder;
 class NetworkProvidersTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * Seed files for the network providers table
      */
     public function run()
     {

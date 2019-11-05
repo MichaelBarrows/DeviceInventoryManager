@@ -5,9 +5,7 @@ use Illuminate\Database\Seeder;
 class DeviceUserPivotTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * Seed data for device and user relations
      */
     public function run()
     {

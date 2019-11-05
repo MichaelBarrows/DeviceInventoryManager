@@ -5,7 +5,7 @@ use Illuminate\Database\Seeder;
 class ManufacturersTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed data for manufacturers table
      *
      * @return void
      */

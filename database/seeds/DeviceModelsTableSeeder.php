@@ -5,9 +5,8 @@ use Illuminate\Database\Seeder;
 class DeviceModelsTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed data for device models 
      *
-     * @return void
      */
     public function run()
     {

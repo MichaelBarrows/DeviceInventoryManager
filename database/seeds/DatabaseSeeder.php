@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DeviceModelsTableSeeder::class);
         $this->call(DevicesTableSeeder::class);
         $this->call(DeviceUserPivotTableSeeder::class);
-
         $this->call(DeviceSimCardPivotTableSeeder::class);
         $this->call(PhoneNumberSimCardPivotTableSeeder::class);
     }

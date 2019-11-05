@@ -5,9 +5,7 @@ use Illuminate\Database\Seeder;
 class PhoneNumberSimCardPivotTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * Seed data for phone number and sim card relations
      */
     public function run()
     {

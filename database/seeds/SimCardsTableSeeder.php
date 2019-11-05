@@ -14,7 +14,7 @@ class SimCardsTableSeeder extends Seeder
         $faker = \Faker\Factory::create('en_GB');
         for ($i = 0; $i < 6; $i++) {
             DB::table('sim_cards')->insert([
-                'sim_number' => $faker->unique()->randomNumber($nbDigits = 8),
+                'sim_number' => $faker->numerify('##############'),
                 'network_provider_id' => $faker->numberBetween(1, 2),
             ]);
         }

@@ -17,7 +17,7 @@ class SimCard extends Model
     ];
 
     // Fields not to be returned
-    protected $hidden = ['network_provider_id', 'created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     /**
      * Devices

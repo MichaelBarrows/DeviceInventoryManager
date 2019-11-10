@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SimCard;
+use App\PhoneNumber;
 use Carbon\Carbon;
 
 class SimCardPhoneNumberController extends Controller
@@ -15,7 +16,7 @@ class SimCardPhoneNumberController extends Controller
    */
     public function index($sim_card)
     {
-        $phone_numbers = SimCard::findOrFail($sim)->phone_numbers;
+        $phone_numbers = SimCard::findOrFail($sim_card)->phone_numbers;
         if ($phone_numbers) {
             return response()->json(['phone_numbers' => $phone_numbers], 200);
         }
@@ -29,7 +30,7 @@ class SimCardPhoneNumberController extends Controller
      */
     public function active($sim_card)
     {
-        $phone_numbers = SimCard::findOrFail($sim)->active_phone_numbers;
+        $phone_numbers = SimCard::findOrFail($sim_card)->active_phone_numbers;
         if ($phone_numbers) {
             return response()->json(['active_phone_numbers' => $phone_numbers], 200);
         }
@@ -43,7 +44,7 @@ class SimCardPhoneNumberController extends Controller
      */
     public function inactive($sim_card)
     {
-        $phone_numbers = SimCard::findOrFail($sim)->inactive_phone_numbers;
+        $phone_numbers = SimCard::findOrFail($sim_card)->inactive_phone_numbers;
         if ($phone_numbers) {
             return response()->json(['inactive_phone_numbers' => $phone_numbers], 200);
         }
@@ -55,12 +56,19 @@ class SimCardPhoneNumberController extends Controller
      * Links a phone number to a sim card by creating a record in the pivot table.
      * Unsets the relations so that only a single phone number is returned rather
      * than all phone numbers.
+     *
+     * Also ensures that the sim card and phone number have the same network
+     * provider ID
      */
      public function store($sim_card, Request $request)
      {
          try {
-             $sim_card = SimCard::findorFail($sim);
+             $sim_card = SimCard::findorFail($sim_card);
              $phone_number_id = json_decode($request->getContent(), true)['phone_number_id'];
+             $phone_number_instance = PhoneNumber::findOrFail($phone_number_id);
+             if ($phone_number_instance->network_provider_id !== $sim_card->network_provider_id) {
+                return response()->json(['message' => 'Incompatible network providers'], 409);
+             }
              $sim_card->phone_numbers()->attach($phone_number_id, ['assignment_start' => Carbon::now()->toDateString(), 'assignment_end' => null]);
              $sim_card->phone_number = $sim_card->phone_number($phone_number_id);
              $sim_card->unsetRelation('phone_numbers');
@@ -78,7 +86,7 @@ class SimCardPhoneNumberController extends Controller
       */
      public function show($sim_card, $id)
      {
-         $sim_card = SimCard::findOrFail($sim);
+         $sim_card = SimCard::findOrFail($sim_card);
          if ($sim_card->phone_number($id) !== null) {
              $sim_card->phone_number = $sim_card->phone_number($id);
              $sim_card->unsetRelation('phone_number');
@@ -95,7 +103,7 @@ class SimCardPhoneNumberController extends Controller
       */
      public function destroy($sim_card, $id)
      {
-         $sim_card = SimCard::findorFail($sim);
+         $sim_card = SimCard::findorFail($sim_card);
          if ($sim_card->phone_number($id) !== null) {
             $sim_card->phone_numbers()->updateExistingPivot($id, ['assignment_end' => Carbon::now()->toDateString()], false);
             return response()->json(['message' => "Sim card phone number assignment successfully terminated"], 204);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PhoneNumber;
+use App\SimCard;
 use Carbon\Carbon;
 
 class PhoneNumberSimCardController extends Controller
@@ -55,12 +56,19 @@ class PhoneNumberSimCardController extends Controller
      * Links a phone number to a sim card by creating a record in the pivot table.
      * Unsets the relations so that only a single phone number is returned rather
      * than all phone numbers.
+     *
+     * Also ensures that the sim card and phone number have the same network
+     * provider ID
      */
     public function store($phone_number, Request $request)
     {
         try {
             $phone_number = PhoneNumber::findorFail($phone_number);
             $sim_card_id = json_decode($request->getContent(), true)['sim_card_id'];
+            $sim_card_instance = SimCard::findOrFail($sim_card_id);
+            if ($sim_card_instance->network_provider_id !== $phone_number->network_provider_id) {
+               return response()->json(['message' => 'Incompatible network providers'], 409);
+            }
             $phone_number->sim_cards()->attach($sim_card_id, ['assignment_start' => Carbon::now()->toDateString(), 'assignment_end' => null]);
             $phone_number->sim_card = $phone_number->sim_card($sim_card_id);
             $phone_number->unsetRelation('sim_cards');

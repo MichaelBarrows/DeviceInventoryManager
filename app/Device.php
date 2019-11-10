@@ -28,6 +28,32 @@ class Device extends Model
     }
 
     /**
+     * User
+     * Function which returns a single related user
+     */
+    public function user ($user_id) {
+      return $this->users->where('id', $user_id)->first();
+    }
+
+    /**
+     * Active Users
+     * Function which returns a collection of users where the assignment
+     * end field is null (i.e. assignment has not ended).
+     */
+    public function active_users () {
+      return $this->users()->wherePivot('assignment_end', null);
+    }
+
+    /**
+     * Inactive Users
+     * Function which returns a collection of users where the assignment
+     * end field is not null (i.e. assignment has ended).
+     */
+    public function inactive_users () {
+      return $this->users()->wherePivot('assignment_end', '!=', null);
+    }
+
+    /**
      * Device Model
      * Function which defines the relationship between a device and a device
      * model.

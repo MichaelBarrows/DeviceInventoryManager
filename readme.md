@@ -21,4 +21,4 @@ To install this application, run:
 
  the API will be available at ``` http://localhost:8000/api ``` and the front-end page will be available at ``` http://localhost:8000/users ```.
 
-``` Note:  ```  all of the routing can be found in the table in the documentation or by running ``` php artisan route:list ```
+``` Note:  ```  all of the routing can be found by running ``` php artisan route:list ```

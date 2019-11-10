@@ -8,7 +8,7 @@ class Device extends Model
 {
     // relations to be returned with devices
     protected $with = [
-      'device_model.manufacturer', 'device_model', 'device_model.device_type', 'device_model.operating_system'
+      'device_model.manufacturer', 'device_model', 'device_model.device_type', 'device_model.operating_system', 'sim_cards'
     ];
 
     // Fields that can be filled from the API

@@ -60,9 +60,15 @@ class DeviceSimCardController extends Controller
         try {
             $device = Device::findorFail($device);
             $sim_card_id = json_decode($request->getContent(), true)['sim_card_id'];
+            if (count($device->active_sim_cards) >= 1) {
+               foreach($device->active_sim_cards as $sim) {
+                  $device->sim_cards()->updateExistingPivot($sim->id, ['assignment_end' => Carbon::now()->toDateString()], false);
+               }
+            }
             $device->sim_cards()->attach($sim_card_id, ['assignment_start' => Carbon::now()->toDateString(), 'assignment_end' => null]);
             $device->sim_card = $device->sim_card($sim_card_id);
             $device->unsetRelation('sim_cards');
+            $device->unsetRelation('active_sim_cards');
             return response()->json(['device' => $device], 200);
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['message' => $e->errorInfo[2]], 400);

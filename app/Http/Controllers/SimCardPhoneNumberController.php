@@ -69,9 +69,15 @@ class SimCardPhoneNumberController extends Controller
              if ($phone_number_instance->network_provider_id !== $sim_card->network_provider_id) {
                 return response()->json(['message' => 'Incompatible network providers'], 409);
              }
+             if (count($sim_card->active_phone_numbers) >= 1) {
+                foreach($sim_card->active_phone_numbers as $phone) {
+                   $sim_card->phone_numbers()->updateExistingPivot($phone->id, ['assignment_end' => Carbon::now()->toDateString()], false);
+                }
+             }
              $sim_card->phone_numbers()->attach($phone_number_id, ['assignment_start' => Carbon::now()->toDateString(), 'assignment_end' => null]);
              $sim_card->phone_number = $sim_card->phone_number($phone_number_id);
              $sim_card->unsetRelation('phone_numbers');
+             $sim_card->unsetRelation('active_phone_numbers');
              return response()->json(['sim_card' => $sim_card], 200);
          } catch (\Illuminate\Database\QueryException $e) {
              return response()->json(['message' => $e->errorInfo[2]], 400);
